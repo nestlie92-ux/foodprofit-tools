@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 
 type Ingredient = {
@@ -639,16 +640,42 @@ export default function Home() {
       {/* HEADER */}
 
       <header className="border-b border-slate-200 bg-white print:hidden">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-          <div>
-            <p className="text-xl font-bold text-emerald-700">
-              FoodProfit Tools
-            </p>
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-5">
+          <Link
+            href="/"
+            className="shrink-0"
+         >
+          <p className="text-xl font-bold text-emerald-700">
+            FoodProfit Tools
+          </p>
 
-            <p className="text-xs text-slate-500">
-              Free tools for small food businesses
-            </p>
-          </div>
+          <p className="text-xs text-slate-500">
+            Free tools for small food businesses
+          </p>
+        </Link>
+
+        <nav className="hidden items-center gap-6 text-sm font-medium sm:flex">
+          <Link
+            href="/"
+            className="text-emerald-700"
+        >
+         Calculator
+        </Link>
+
+        <Link
+          href="/resources"
+          className="text-slate-600 hover:text-emerald-700"
+        >
+         Resources
+        </Link>
+
+        <Link
+          href="/foodprofit-pro"
+          className="text-slate-600 hover:text-emerald-700"
+        >
+         FoodProfit Pro
+        </Link>
+        </nav>
 
           <span className="rounded-full bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-700">
             100% Free
@@ -1767,6 +1794,26 @@ export default function Home() {
             </div>
 
             <div className="mt-8 rounded-xl bg-slate-800 p-4 print:hidden">
+              <p className="text-sm font-semibold text-emerald-400">
+                Want to cost more than one recipe?
+              </p>
+
+              <p className="mt-2 text-sm leading-6 text-slate-300">
+                We're building the FoodProfit Recipe Costing Pack
+                with practical spreadsheets and worksheets for
+                managing recipes, ingredient prices, yield, waste
+                and menu pricing.
+               </p>
+
+            <Link
+              href="/foodprofit-pro"
+              className="mt-4 block rounded-lg bg-emerald-600 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-emerald-500"
+           >
+            Explore FoodProfit Pro →
+          </Link>
+        </div>
+
+            <div className="mt-6 rounded-xl border border-emerald-500/30 bg-emerald-950/40 p-5 print:hidden">
               <p className="text-sm font-medium text-white">
                 {trueDirectCost > 0
                   ? "Your true direct cost is calculated."
