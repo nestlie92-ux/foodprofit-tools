@@ -1,39 +1,71 @@
-import Link from "next/link";
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "How to Calculate Food Cost Percentage | FoodProfit Tools",
+  title: "Food Costing Resources for Small Food Businesses | FoodProfit Tools",
   description:
-    "Learn what food cost percentage means, how to calculate it, and how it can help you price food products more confidently.",
+    "Practical guides to food cost percentage, recipe costing, usable yield, food pricing, packaging costs, and profit for small food businesses.",
 };
 
-export default function FoodCostPercentagePage() {
+const resources = [
+  {
+    title: "How to Calculate Food Cost Percentage",
+    description:
+      "Learn what food cost percentage means, how to calculate it, and how to use it when pricing food products.",
+    href: "/resources/food-cost-percentage",
+    topic: "Food Cost Percentage",
+  },
+  {
+    title: "How to Calculate the Cost of a Recipe",
+    description:
+      "Learn how to calculate the true direct cost of a recipe using ingredient prices, quantities, usable yield, packaging, and portions.",
+    href: "/resources/recipe-cost",
+    topic: "Recipe Costing",
+  },
+  {
+    title: "Understanding Usable Yield",
+    description:
+      "Learn why the amount you buy is not always the amount you can use, and how usable yield affects your true ingredient cost.",
+    href: "/resources/usable-yield",
+    topic: "Usable Yield",
+  },
+  {
+    title: "How to Price Food for Profit",
+    description:
+      "Learn how food cost, direct cost per portion, suggested selling price, and gross profit work together.",
+    href: "/resources/price-food-for-profit",
+    topic: "Food Pricing",
+  },
+];
+
+export default function ResourcesPage() {
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
+      {/* Header */}
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-          <Link href="/" className="block">
-            <p className="text-xl font-bold text-emerald-700">
-              FoodProfit Tools
-            </p>
-            <p className="text-xs text-slate-500">
-              Free tools for small food businesses
-            </p>
+          <Link href="/" className="text-xl font-bold tracking-tight">
+            FoodProfit Tools
           </Link>
 
-          <nav className="flex gap-4 text-sm font-medium">
-            <Link href="/" className="text-slate-600 hover:text-emerald-700">
+          <nav className="flex items-center gap-5 text-sm font-medium">
+            <Link
+              href="/"
+              className="text-slate-600 transition hover:text-slate-900"
+            >
               Calculator
             </Link>
+
             <Link
               href="/resources"
-              className="text-emerald-700"
+              className="text-slate-900"
             >
               Resources
             </Link>
+
             <Link
               href="/foodprofit-pro"
-              className="text-slate-600 hover:text-emerald-700"
+              className="text-slate-600 transition hover:text-slate-900"
             >
               FoodProfit Pro
             </Link>
@@ -41,118 +73,121 @@ export default function FoodCostPercentagePage() {
         </div>
       </header>
 
-      <article className="mx-auto max-w-3xl px-6 py-14 md:py-20">
-        <p className="text-sm font-bold uppercase tracking-widest text-emerald-700">
-          Food Costing
-        </p>
+      {/* Hero */}
+      <section className="bg-white">
+        <div className="mx-auto max-w-4xl px-6 py-16 text-center">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-emerald-700">
+            FoodProfit Tools Resources
+          </p>
 
-        <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
-          How to Calculate Food Cost Percentage
-        </h1>
+          <h1 className="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
+            Practical food costing guidance for small food businesses.
+          </h1>
 
-        <p className="mt-6 text-lg leading-8 text-slate-600">
-          Food cost percentage helps you understand how much of your selling
-          price is being used to cover the direct cost of the food you sell.
-          It is one of the most useful numbers to understand when pricing
-          recipes and menu items.
-        </p>
+          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-slate-600">
+            Understand your ingredient costs, food cost percentage, usable
+            yield, recipe costs, pricing, packaging costs, and profit so you
+            can make better decisions about what to charge for your food.
+          </p>
 
-        <div className="mt-10 space-y-10">
-          <section>
-            <h2 className="text-2xl font-bold">
-              What is food cost percentage?
-            </h2>
-
-            <p className="mt-4 leading-8 text-slate-700">
-              Food cost percentage is the relationship between your food cost
-              and your selling price. In simple terms, it tells you what
-              percentage of the selling price is used to cover the direct cost
-              of producing the food.
-            </p>
-
-            <p className="mt-4 leading-8 text-slate-700">
-              In the FoodProfit calculator, direct cost includes the ingredients
-              and packaging used for the recipe.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold">
-              The basic food cost percentage formula
-            </h2>
-
-            <div className="mt-5 rounded-2xl bg-white p-6 text-center shadow-sm ring-1 ring-slate-200">
-              <p className="text-xl font-bold">
-                Food Cost % = Direct Cost ÷ Selling Price × 100
-              </p>
-            </div>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold">
-              Example
-            </h2>
-
-            <p className="mt-4 leading-8 text-slate-700">
-              Imagine one portion of your product costs $3.00 in ingredients
-              and packaging. You sell that portion for $10.00.
-            </p>
-
-            <div className="mt-5 rounded-2xl bg-emerald-50 p-6">
-              <p className="font-semibold text-emerald-900">
-                $3.00 ÷ $10.00 × 100 = 30%
-              </p>
-            </div>
-
-            <p className="mt-4 leading-8 text-slate-700">
-              That means 30% of the selling price is being used to cover the
-              direct ingredient and packaging cost.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold">
-              What is a desired food cost percentage?
-            </h2>
-
-            <p className="mt-4 leading-8 text-slate-700">
-              A desired food cost percentage is a target you use when exploring
-              a selling price. For example, if you choose 30%, you are
-              exploring a price where your direct food and packaging cost
-              represents about 30% of the selling price.
-            </p>
-
-            <p className="mt-4 leading-8 text-slate-700">
-              It is important to remember that this is a pricing tool, not a
-              complete profit calculation. Labor, rent, utilities, delivery,
-              taxes, marketing, equipment, and other business expenses still
-              need to be considered.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold">
-              Calculate your food cost percentage
-            </h2>
-
-            <p className="mt-4 leading-8 text-slate-700">
-              The easiest way to put this into practice is to cost your actual
-              recipe, including packaging and usable yield.
-            </p>
-
+          <div className="mt-8">
             <Link
               href="/"
-              className="mt-6 inline-flex rounded-xl bg-emerald-600 px-6 py-3 font-bold text-white hover:bg-emerald-700"
+              className="inline-flex rounded-lg bg-emerald-700 px-6 py-3 font-semibold text-white transition hover:bg-emerald-800"
             >
               Use the Free Food Cost Calculator →
             </Link>
-          </section>
+          </div>
         </div>
-      </article>
+      </section>
 
-      <footer className="border-t border-slate-200 bg-white">
+      {/* Resource Cards */}
+      <section className="mx-auto max-w-6xl px-6 py-14">
+        <div className="grid gap-6 md:grid-cols-2">
+          {resources.map((resource) => (
+            <article
+              key={resource.href}
+              className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+            >
+              <p className="text-sm font-semibold uppercase tracking-wide text-emerald-700">
+                {resource.topic}
+              </p>
+
+              <h2 className="mt-3 text-2xl font-bold text-slate-900">
+                {resource.title}
+              </h2>
+
+              <p className="mt-4 leading-7 text-slate-600">
+                {resource.description}
+              </p>
+
+              <Link
+                href={resource.href}
+                className="mt-6 inline-flex font-semibold text-emerald-700 hover:text-emerald-900"
+              >
+                Read the guide →
+              </Link>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* Why Food Costing Matters */}
+      <section className="border-y border-slate-200 bg-white">
+        <div className="mx-auto max-w-4xl px-6 py-14">
+          <h2 className="text-3xl font-bold text-slate-900">
+            Why food costing matters
+          </h2>
+
+          <div className="mt-6 space-y-5 text-lg leading-8 text-slate-600">
+            <p>
+              It is possible to sell a food product every day and still not
+              know whether you are making a healthy profit from it.
+            </p>
+
+            <p>
+              Ingredient prices change. Portions can become larger than
+              planned. Some ingredients are trimmed or wasted. Packaging adds
+              another cost. When these costs are not included, your selling
+              price may look profitable while the actual margin is much
+              smaller.
+            </p>
+
+            <p>
+              Food costing helps you understand what it really costs to
+              produce a recipe and gives you better information when deciding
+              what to charge.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Calculator CTA */}
+      <section className="bg-slate-900">
+        <div className="mx-auto max-w-4xl px-6 py-14 text-center">
+          <h2 className="text-3xl font-bold text-white">
+            Ready to calculate your numbers?
+          </h2>
+
+          <p className="mx-auto mt-4 max-w-2xl text-lg leading-8 text-slate-300">
+            Use the free FoodProfit Tools calculator to calculate ingredient
+            costs, packaging costs, direct cost per portion, suggested selling
+            price, food cost percentage, and gross profit.
+          </p>
+
+          <Link
+            href="/"
+            className="mt-7 inline-flex rounded-lg bg-white px-6 py-3 font-semibold text-slate-900 transition hover:bg-slate-100"
+          >
+            Open the Free Calculator →
+          </Link>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-white">
         <div className="mx-auto max-w-6xl px-6 py-8 text-center text-sm text-slate-500">
-          FoodProfit Tools — Free practical tools for small food businesses.
+          <p>FoodProfit Tools — Free tools for small food businesses.</p>
         </div>
       </footer>
     </main>
