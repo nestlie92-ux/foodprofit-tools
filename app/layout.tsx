@@ -23,8 +23,7 @@ export const metadata: Metadata = {
   ],
 
   openGraph: {
-    title:
-      "Free Food Cost Calculator | FoodProfit Tools",
+    title: "Free Food Cost Calculator | FoodProfit Tools",
 
     description:
       "Calculate recipe costs, packaging costs, food cost percentage and suggested selling price for your food business.",
@@ -36,10 +35,6 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-
-  verification: {
-    google: "i2cgVSOAsG227HEgsyv_bUuSWrKQmlrEoGBvXhA0J2k",
-  },
 };
 
 export default function RootLayout({
@@ -49,6 +44,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Google Search Console verification */}
+        <meta
+          name="google-site-verification"
+          content="i2cgVSOAsG227HEgsyv_bUuSWrKQmlrEoGBvXhA0J2k"
+        />
+
+        {/* Pinterest website verification */}
+        <meta
+          name="p:domain_verify"
+          content="cbf12c2fe893cdd542de8fcfae604b5d"
+        />
+      </head>
+
       <body>{children}</body>
     </html>
   );
