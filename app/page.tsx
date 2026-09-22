@@ -109,7 +109,7 @@ export default function Home() {
   // CURRENCY
   // --------------------------------
 
-  const [currency, setCurrency] = useState("BWP");
+  const [currency, setCurrency] = useState("USD");
 
   const currencySymbols: Record<string, string> = {
     BWP: "P",
