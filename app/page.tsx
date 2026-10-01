@@ -79,6 +79,98 @@ const convertToBaseUnit = (value: number, unit: string) => {
   }
 };
 
+/*
+  FoodProfit Calculator V2 — ingredient-aware conversions
+
+  Weight ↔ volume conversions cannot safely use one universal number
+  because ingredients have different densities. The values below are
+  expressed as grams per millilitre and are used only when the calculator
+  recognizes the ingredient name.
+
+  The baking conversions are based on the ingredient-specific tablespoon/cup
+  references used during V2 research. They are intentionally kept in a
+  small, transparent local library so the calculator remains free and
+  requires no database or API.
+*/
+const ingredientDensities: Record<string, number> = {
+  "baking powder": 13.8 / 14.78676478125,
+  "baking soda": 13.8 / 14.78676478125,
+  "all purpose flour": 120 / 236.5882365,
+  "all-purpose flour": 120 / 236.5882365,
+  "plain flour": 120 / 236.5882365,
+  flour: 120 / 236.5882365,
+  sugar: 200 / 236.5882365,
+  "white sugar": 200 / 236.5882365,
+  "granulated sugar": 200 / 236.5882365,
+  butter: 227 / 236.5882365,
+  "cocoa powder": 5.3 / 14.78676478125,
+  milk: 1,
+  water: 1,
+  "vegetable oil": 13.8 / 14.78676478125,
+  oil: 13.8 / 14.78676478125,
+  "canola oil": 13.8 / 14.78676478125,
+  "sunflower oil": 13.8 / 14.78676478125,
+  "olive oil": 13.8 / 14.78676478125,
+  rice: 11.6 / 14.78676478125,
+  "white rice": 11.6 / 14.78676478125,
+  "rolled oats": 5.6 / 14.78676478125,
+  oats: 5.6 / 14.78676478125,
+  "chopped nuts": 7.8 / 14.78676478125,
+  nuts: 7.8 / 14.78676478125,
+  "chocolate chips": 10.6 / 14.78676478125,
+  honey: 21 / 14.78676478125,
+  salt: 18 / 14.78676478125,
+};
+
+const ingredientAliases: Record<string, string> = {
+  bp: "baking powder",
+  "baking-powder": "baking powder",
+  "bicarb": "baking soda",
+  bicarbonate: "baking soda",
+  "bicarbonate of soda": "baking soda",
+  "all purpose flour": "all purpose flour",
+  "all-purpose flour": "all purpose flour",
+  "plain flour": "plain flour",
+  "white sugar": "white sugar",
+  "granulated sugar": "granulated sugar",
+  "vegetable oil": "vegetable oil",
+  "canola oil": "canola oil",
+  "sunflower oil": "sunflower oil",
+  "olive oil": "olive oil",
+  "white rice": "white rice",
+  "rolled oats": "rolled oats",
+  "chocolate chips": "chocolate chips",
+  "cocoa powder": "cocoa powder",
+};
+
+const normalizeIngredientName = (name: string) =>
+  name.trim().toLowerCase().replace(/\s+/g, " ");
+
+const getIngredientDensity = (name: string) => {
+  const normalized = normalizeIngredientName(name);
+  if (!normalized) return null;
+
+  const directMatch = ingredientDensities[normalized];
+  if (directMatch) return directMatch;
+
+  const alias = ingredientAliases[normalized];
+  if (alias && ingredientDensities[alias]) {
+    return ingredientDensities[alias];
+  }
+
+  const matchingKey = Object.keys(ingredientDensities).find((key) =>
+    normalized.includes(key)
+  );
+
+  return matchingKey ? ingredientDensities[matchingKey] : null;
+};
+
+const convertVolumeToWeight = (value: number, unit: string, density: number) =>
+  convertToBaseUnit(value, unit) * density;
+
+const convertWeightToVolume = (value: number, unit: string, density: number) =>
+  convertToBaseUnit(value, unit) / density;
+
 const createIngredient = (): Ingredient => ({
   id: Date.now() + Math.random(),
   name: "",
@@ -224,23 +316,57 @@ export default function Home() {
     const packGroup = unitGroups[ingredient.packUnit];
     const amountGroup = unitGroups[ingredient.amountUnit];
 
-    if (
-      !packGroup ||
-      !amountGroup ||
-      packGroup !== amountGroup
-    ) {
+    if (!packGroup || !amountGroup) {
       return 0;
     }
 
-    const convertedPackSize = convertToBaseUnit(
-      packSize,
-      ingredient.packUnit
-    );
+    let convertedPackSize: number;
+    let convertedAmountUsed: number;
 
-    const convertedAmountUsed = convertToBaseUnit(
-      amountUsed,
-      ingredient.amountUnit
-    );
+    if (packGroup === amountGroup) {
+      convertedPackSize = convertToBaseUnit(
+        packSize,
+        ingredient.packUnit
+      );
+
+      convertedAmountUsed = convertToBaseUnit(
+        amountUsed,
+        ingredient.amountUnit
+      );
+    } else if (
+      (packGroup === "weight" && amountGroup === "volume") ||
+      (packGroup === "volume" && amountGroup === "weight")
+    ) {
+      const density = getIngredientDensity(ingredient.name);
+
+      if (!density) {
+        return 0;
+      }
+
+      if (packGroup === "weight") {
+        convertedPackSize = convertToBaseUnit(
+          packSize,
+          ingredient.packUnit
+        );
+        convertedAmountUsed = convertVolumeToWeight(
+          amountUsed,
+          ingredient.amountUnit,
+          density
+        );
+      } else {
+        convertedPackSize = convertVolumeToWeight(
+          packSize,
+          ingredient.packUnit,
+          density
+        );
+        convertedAmountUsed = convertToBaseUnit(
+          amountUsed,
+          ingredient.amountUnit
+        );
+      }
+    } else {
+      return 0;
+    }
 
     if (convertedPackSize <= 0) return 0;
 
@@ -445,7 +571,7 @@ export default function Home() {
     if (!confirmed) return;
 
     setRecipeName("");
-    setCurrency("BWP");
+    setCurrency("USD");
     setIngredients([createIngredient()]);
     setPackagingItems([createPackaging()]);
     setPortions("");
@@ -909,11 +1035,23 @@ export default function Home() {
                   const amountGroup =
                     unitGroups[ingredient.amountUnit];
 
+                  const crossFamilyWeightVolume =
+                    (packGroup === "weight" && amountGroup === "volume") ||
+                    (packGroup === "volume" && amountGroup === "weight");
+
+                  const smartConversionAvailable = Boolean(
+                    getIngredientDensity(ingredient.name)
+                  );
+
                   const unitsMismatch =
                     Boolean(
                       ingredient.packSize &&
                         ingredient.amountUsed &&
-                        packGroup !== amountGroup
+                        packGroup &&
+                        amountGroup &&
+                        packGroup !== amountGroup &&
+                        (!crossFamilyWeightVolume ||
+                          !smartConversionAvailable)
                     );
 
                   return (
@@ -966,7 +1104,9 @@ export default function Home() {
                           <p className="mt-2 text-xs leading-5 text-slate-500 print:hidden">
                             Enter the name of the
                             ingredient you are
-                            costing.
+                            costing. For smart weight ↔ volume
+                            conversions, use a common ingredient
+                            name such as flour, sugar, or baking powder.
                           </p>
                         </div>
 
@@ -1251,11 +1391,33 @@ export default function Home() {
 
                         {/* WARNING */}
 
+                        {crossFamilyWeightVolume &&
+                          smartConversionAvailable &&
+                          ingredient.packSize &&
+                          ingredient.amountUsed && (
+                            <p className="text-sm text-emerald-700">
+                              Smart conversion applied using the
+                              ingredient&apos;s specific density.
+                            </p>
+                          )}
+
+                        {crossFamilyWeightVolume &&
+                          !smartConversionAvailable &&
+                          ingredient.name &&
+                          ingredient.packSize &&
+                          ingredient.amountUsed && (
+                            <p className="text-sm text-amber-600">
+                              We don&apos;t have a smart conversion
+                              for this ingredient yet. Use
+                              matching weight or volume units.
+                            </p>
+                          )}
+
                         {unitsMismatch && (
                           <p className="text-sm text-amber-600">
-                            These units cannot be converted
-                            directly. Use compatible
-                            weight, volume, or count units.
+                            These units cannot be converted directly.
+                            Use compatible weight, volume, or count
+                            units.
                           </p>
                         )}
 
