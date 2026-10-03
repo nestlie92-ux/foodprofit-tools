@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export default function FoodProfitProPage() {
-  const payhipUrl = "https://thebreakthroughpoint.sookulture.online/b/U9S4y";
+  const payhipUrl = "https://payhip.com/b/iMhPe";
 
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
