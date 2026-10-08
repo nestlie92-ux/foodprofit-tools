@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -1989,6 +1987,161 @@ export default function Home() {
               </p>
             </div>
           </aside>
+        </div>
+      </section>
+
+      {/* FREQUENTLY ASKED QUESTIONS */}
+
+      <section
+        id="faq"
+        className="mx-auto max-w-6xl px-6 pb-12 print:hidden"
+      >
+        <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
+          <div className="max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-widest text-emerald-700">
+              Frequently Asked Questions
+            </p>
+
+            <h2 className="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">
+              Questions about recipe costing?
+            </h2>
+
+            <p className="mt-3 text-sm leading-6 text-slate-600">
+              Here are some of the most common questions about using the FoodProfit Calculator.
+            </p>
+          </div>
+
+          <div className="mt-8 divide-y divide-slate-200 border-y border-slate-200">
+            <details className="group py-5">
+              <summary className="cursor-pointer list-none pr-8 font-semibold text-slate-900">
+                Is the FoodProfit Calculator free?
+                <span className="float-right text-emerald-700 transition group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">
+                Yes. The FoodProfit Calculator is free to use. You can calculate ingredient costs, packaging costs, cost per portion, food cost percentage, and a suggested selling price without paying for a subscription.
+              </p>
+            </details>
+
+            <details className="group py-5">
+              <summary className="cursor-pointer list-none pr-8 font-semibold text-slate-900">
+                What is a desired food cost percentage?
+                <span className="float-right text-emerald-700 transition group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">
+                Your desired food cost percentage is the percentage of your selling price that you want your direct ingredient and packaging costs to represent. For example, at 30%, a $10 selling price would allow about $3 toward those direct costs.
+              </p>
+            </details>
+
+            <details className="group py-5">
+              <summary className="cursor-pointer list-none pr-8 font-semibold text-slate-900">
+                What does usable yield mean?
+                <span className="float-right text-emerald-700 transition group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">
+                Usable yield accounts for the part of a purchased ingredient that remains available for your recipe after trimming, peeling, bones, preparation, or other losses. If you buy 1 kg of chicken and only 800 g is usable, the yield is 80%.
+              </p>
+            </details>
+
+            <details className="group py-5">
+              <summary className="cursor-pointer list-none pr-8 font-semibold text-slate-900">
+                Can I use different measurement units?
+                <span className="float-right text-emerald-700 transition group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">
+                Yes. The calculator supports common weight, volume, and count units. Weight-to-weight and volume-to-volume conversions are handled automatically. For supported ingredients, FoodProfit can also convert between weight and volume using ingredient-specific conversion data.
+              </p>
+            </details>
+
+            <details className="group py-5">
+              <summary className="cursor-pointer list-none pr-8 font-semibold text-slate-900">
+                Why does the calculator sometimes ask me to use compatible units?
+                <span className="float-right text-emerald-700 transition group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">
+                Weight and volume cannot always be converted using one universal number because different ingredients have different densities. When FoodProfit does not have a reliable conversion for an ingredient, it will not guess. Use matching weight or volume units instead.
+              </p>
+            </details>
+
+            <details className="group py-5">
+              <summary className="cursor-pointer list-none pr-8 font-semibold text-slate-900">
+                How is the Suggested Selling Price calculated?
+                <span className="float-right text-emerald-700 transition group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">
+                FoodProfit divides your true direct cost per portion by your desired food cost percentage. The result is a starting suggested selling price. You should also consider labor, rent, utilities, delivery, taxes, marketing, equipment, competition, and other business expenses before choosing your final price.
+              </p>
+            </details>
+
+            <details className="group py-5">
+              <summary className="cursor-pointer list-none pr-8 font-semibold text-slate-900">
+                Does the calculator include packaging costs?
+                <span className="float-right text-emerald-700 transition group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">
+                Yes. You can enter containers, cups, lids, bags, labels, sauce containers, and other packaging separately. Packaging is included in the true direct cost calculation.
+              </p>
+            </details>
+
+            <details className="group py-5">
+              <summary className="cursor-pointer list-none pr-8 font-semibold text-slate-900">
+                Does the calculator include labor and overhead?
+                <span className="float-right text-emerald-700 transition group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">
+                Not yet. The current calculator focuses on ingredients and packaging as your true direct cost. Labor, rent, electricity, equipment, delivery, marketing, taxes, and other overhead expenses should be considered separately when setting your final selling price.
+              </p>
+            </details>
+
+            <details className="group py-5">
+              <summary className="cursor-pointer list-none pr-8 font-semibold text-slate-900">
+                Can I print or save my costing sheet?
+                <span className="float-right text-emerald-700 transition group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">
+                Yes. Use the Print / Save as PDF button to print your costing sheet or save it as a PDF from your browser. You can also download the costing information as a CSV file.
+              </p>
+            </details>
+
+            <details className="group py-5">
+              <summary className="cursor-pointer list-none pr-8 font-semibold text-slate-900">
+                Can I use FoodProfit for a small or home-based food business?
+                <span className="float-right text-emerald-700 transition group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">
+                Absolutely. FoodProfit is designed to help small food businesses understand their costs and price their products more confidently. It can be useful for home bakers, caterers, food trucks, restaurants, meal-prep businesses, and other food entrepreneurs.
+              </p>
+            </details>
+          </div>
         </div>
       </section>
 
